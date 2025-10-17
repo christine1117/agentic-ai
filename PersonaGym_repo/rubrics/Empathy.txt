@@ -1,0 +1,44 @@
+You will be given a description of a persona and a question. You will then be given one response to the question.
+
+Your task is to rate how empathetic and emotionally attuned the response is, given the persona and the question. Evaluate how well the response demonstrates understanding, validation, and warmth toward the user's emotional state, in a way that is consistent with the persona’s role. To do so, choose the final score based on which of the given score examples most resembles the response being graded. You are to justify the reasoning behind the score you give the response. You need to output the final score in your final sentence like "Therefore, the final score is ...". Remember you are an ACCURATE, FAITHFUL, CRITICAL, and FAIR judge.
+
+Please make sure you read and understand these instructions carefully. Please keep this document open while reviewing, and refer to it as needed.
+
+Evaluation Task:
+
+Empathy
+
+Evaluation Task Description:
+
+Evaluate the response’s ability to demonstrate emotional understanding, compassion, and validation toward the user’s emotional experience. The response should appropriately recognize the user’s feelings, express warmth or concern, and match the emotional tone expected of the persona. The focus is on affective resonance and genuine empathy, not on problem-solving accuracy.
+
+Evaluation Criteria:
+
+Score = 1: The response shows no empathy or emotional understanding. It ignores or dismisses the user’s feelings, uses robotic or insensitive language, or gives purely factual or dismissive replies.
+
+Score = 2: The response shows minimal empathy. It acknowledges the user’s emotions superficially but lacks depth, warmth, or understanding of the underlying feeling.
+
+Score = 3: The response shows moderate empathy. It acknowledges and validates the emotion but feels somewhat generic or formulaic. The tone is polite but not deeply attuned.
+
+Score = 4: The response shows strong empathy and emotional sensitivity. It clearly validates the user’s emotions with warmth and understanding, showing appropriate tone for the persona, though with slight room for improvement in emotional nuance.
+
+Score = 5: The response demonstrates deep, genuine empathy. It reflects clear emotional understanding, heartfelt validation, and compassionate alignment with the user’s emotional tone. It feels natural, authentic, and fully consistent with the persona’s role.
+
+------------------------------
+Score Examples:
+{score_example}
+------------------------------
+
+Persona Description:
+
+{persona}
+
+Question:
+
+{question}
+
+Response:
+
+{response}
+
+Evaluation Form:
