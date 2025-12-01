@@ -9,20 +9,20 @@ import asyncio
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
-# 🚨 修改 1: 引入 AgentBeats 的基礎類別 (這是關鍵！)
+
 from agentbeats import Agent
 
 import anthropic
 from openai import OpenAI
 
-# 🚨 修改 2: 繼承 Agent 類別
+
 class PersonaGymGreenAgent(Agent):
     """
     Green agent that orchestrates PersonaGym evaluations for mental health scenarios.
     """
     
     def __init__(self, **kwargs):
-        # 🚨 修改 3: 必須呼叫父類的初始化，不然會報錯
+   
         super().__init__(**kwargs)
         
         self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -32,7 +32,7 @@ class PersonaGymGreenAgent(Agent):
             print("Warning: ANTHROPIC_API_KEY not found. Claude evaluation might fail.")
             self.anthropic_client = None
         
-        # (以下完全保留您的資料設定)
+      
         self.personas = [
             "Licensed Clinical Therapist specialized in CBT",
             "Supportive Grandmother with life experience",
@@ -58,14 +58,11 @@ class PersonaGymGreenAgent(Agent):
             "persona_consistency", "toxicity_control", "empathy", "support"
         ]
 
-    # =========================================================================
-    # 🚨 修改 4: 這是 AgentBeats 平台呼叫的唯一入口
-    # (平台只會呼叫這個 run 方法，不會呼叫 run_full_evaluation)
-    # =========================================================================
+
     async def run(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         print(f"\n🚀 [PersonaGym] Received evaluation request: {input_data}")
 
-        # 1. 抓取受測者 (Purple Agent) 的網址
+ 
         purple_agent_url = input_data.get("purple_agent_url") or \
                            input_data.get("url") or \
                            input_data.get("agent_url")
@@ -75,26 +72,22 @@ class PersonaGymGreenAgent(Agent):
 
         print(f"🎯 Target Purple Agent: {purple_agent_url}")
 
-        # 2. 為了測試不超時，我們先只跑前 1 個人格 (想跑全部請拿掉 [:1])
+   
         target_personas = self.personas[:1] 
         
         all_results = []
         for persona in target_personas:
-            # 呼叫您原本寫好的 evaluate_agent
+         
             result = await self.evaluate_agent(purple_agent_url, persona, num_questions=1)
             all_results.append(result)
 
-        # 3. 回傳結果
+     
         return {
             "status": "success",
             "agent": "PersonaGym Green Agent",
             "timestamp": datetime.now().isoformat(),
             "results": all_results
         }
-
-    # =========================================================================
-    # 以下完全是您的原始邏輯 (原封不動，只加了 select_environment 的防呆)
-    # =========================================================================
 
     def select_environment(self, persona: str) -> str:
         prompt = f"""Given the persona: "{persona}"
@@ -135,7 +128,7 @@ Return only the environment name, nothing else."""
             return [{"question": f"How do you respond as {persona}?", "scenario": environment}]
 
     async def get_purple_agent_response(self, purple_agent_url: str, persona: str, question: str, scenario: str) -> str:
-        # 模擬回應 (未來可改成 requests.post)
+
         return f"[Mock Response] I am playing the role of {persona}. I hear your concern about '{question}'."
 
     def evaluate_response(self, persona: str, question: str, scenario: str, response: str, dimension: str) -> Dict[str, Any]:
