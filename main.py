@@ -5,12 +5,12 @@ import asyncio
 import os
 import sys
 
-# 確保能 import src 下的模組
+
 sys.path.append(os.getcwd())
 
 from src.green_agent import start_green_agent
 from src.white_agent import start_white_agent
-# 👇 引入剛剛寫的 launcher
+
 from src.launcher import launch_evaluation
 
 app = typer.Typer(help="PersonaGym Framework")
