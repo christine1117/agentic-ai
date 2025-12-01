@@ -1,0 +1,17 @@
+name = "Empa-green"
+description = """PersonaGym Green Agent for mental health evaluation."""
+version = "1.0.0"
+
+url = "https://already-receives-thickness-lunch.trycloudflare.com"
+
+defaultInputModes = ["text"]
+defaultOutputModes = ["text", "json"]
+
+[capabilities]
+streaming = false
+
+[[skills]]
+id = "mental_health_eval"
+name = "Mental Health Evaluation"
+description = """Evaluates responses based on empathy, safety, and therapeutic standards."""
+tags = ["green", "mental-health"]

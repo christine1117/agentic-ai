@@ -1,0 +1,19 @@
+[project]
+name = "personagym-agent"
+version = "0.1.0"
+description = "PersonaGym Green Agent implementation compatible with AgentBeats."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "a2a-sdk[http-server]>=0.3.8",
+    "typer>=0.9.0",
+    "uvicorn>=0.20.0",
+    "python-dotenv>=1.0.0",
+    "openai>=1.0.0",
+    "anthropic>=0.3.0",
+    "httpx>=0.24.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

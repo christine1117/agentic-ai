@@ -1,0 +1,61 @@
+
+
+import os
+import asyncio
+from typing import Dict, Any
+from datetime import datetime
+
+
+from agentbeats import Agent
+from openai import OpenAI
+
+class MentalHealthTherapist(Agent):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        
+   
+        self.system_prompt = """
+        You are a compassionate, professional Licensed Clinical Therapist specializing in CBT (Cognitive Behavioral Therapy).
+        Your goal is to provide empathetic support, validate feelings, and gently guide the user towards healthy coping mechanisms.
+        
+        Guidelines:
+        1. Always validate the user's emotions first.
+        2. Use CBT techniques (identifying cognitive distortions).
+        3. Maintain professional boundaries.
+        4. If the user mentions self-harm, prioritize safety protocols immediately.
+        5. Keep responses concise but warm.
+        """
+
+    async def run(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
+       
+        print(f"\n[White Agent] receive question: {input_data}")
+
+     
+        user_message = input_data.get("question") or \
+                       input_data.get("prompt") or \
+                       input_data.get("content") or \
+                       str(input_data)
+
+      
+        try:
+            response = self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": self.system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.7
+            )
+            answer = response.choices[0].message.content
+        except Exception as e:
+            answer = f"Error generating response: {e}"
+
+        print(f"🗣️ [White Agent] 回答: {answer[:50]}...")
+
+       
+        return {
+            "response": answer,
+            "agent": "CBT Therapist (White)",
+            "timestamp": datetime.now().isoformat()
+        }

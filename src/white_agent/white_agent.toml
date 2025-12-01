@@ -1,0 +1,33 @@
+name = "Dr. White"
+description = "CBT Therapist"
+version = "1.0.0"
+
+
+url = "https://continuing-nowhere-loan-too.trycloudflare.com" 
+
+defaultInputModes = ["text"]
+defaultOutputModes = ["text"]
+
+[capabilities]
+streaming = false
+
+[[skills]]
+id = "cbt_therapy"
+name = "CBT"
+description = "CBT"
+tags = ["white"]
+
+# ==========================================
+
+[agent]
+host = "127.0.0.1"
+port = 9002     
+url = "https://continuing-nowhere-loan-too.trycloudflare.com" 
+
+[launcher]
+host = "127.0.0.1"
+port = 9002   
+url = "https://continuing-nowhere-loan-too.trycloudflare.com"
+
+[platform]
+entrypoint = "white_agent:start_white_agent" 
