@@ -310,13 +310,19 @@ def start_green_agent(agent_name="empa_green", host="0.0.0.0", port=9001):
         http_handler=request_handler,
     )
     
-    starlette_app = app.build()
-    async def force_status(request):
+    starlette_app = app.build() # 找到這一行
+
+   
+    async def serve_card(request):
+        return JSONResponse(agent_card_dict)
+    starlette_app.add_route("/", serve_card, methods=["GET"])
+    
+
+    async def force_status(request): # 
         return JSONResponse({"status": "ok", "agent": agent_name})
     starlette_app.add_route("/status", force_status, methods=["GET"])
 
     print(f"✅ Server is running. Public Identity: {url}")
-    
     uvicorn.run(starlette_app, host=host, port=port)
 
 # =================================================================
