@@ -1,5 +1,5 @@
 """
-White Agent: CBT Therapist (Improved Version)
+White Agent: CBT Therapist (Cloud Ready Version)
 """
 import os
 import tomllib
@@ -13,11 +13,13 @@ from a2a.server.events import EventQueue
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCard
 from a2a.utils import new_agent_text_message
-from starlette.responses import JSONResponse  # For /status
+from starlette.responses import JSONResponse
+from starlette.middleware.cors import CORSMiddleware 
 
 def load_agent_card_toml(name):
+
     path = os.path.join(os.path.dirname(__file__), f"{name}.toml")
-    print(f"📄 Loading TOML from: {path}")
+    print(f"Loading TOML from: {path}")
     with open(path, "rb") as f:
         return tomllib.load(f)
 
@@ -28,7 +30,6 @@ class TherapistExecutor(AgentExecutor):
 
         client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
-       
         system_prompt = """
         You are a supportive CBT therapist. 
         Give concise, empathetic, and professional responses.
@@ -54,7 +55,8 @@ class TherapistExecutor(AgentExecutor):
     async def cancel(self, context: RequestContext, event_queue: EventQueue):
         print("⚠️ White agent cancelled.")
 
-def start_white_agent(name="white_agent", host="127.0.0.1", port=9002):
+
+def start_white_agent(name="white_agent", host="0.0.0.0", port=9002):
     print(f"Starting White Agent '{name}' on {host}:{port}...")
     
     try:
@@ -63,10 +65,13 @@ def start_white_agent(name="white_agent", host="127.0.0.1", port=9002):
         print(f"❌ Error: Config file {name}.toml not found")
         return
 
-   
-    env_url = os.getenv("WHITE_AGENT_URL")
+ 
+    env_url = os.getenv("RAILWAY_PUBLIC_DOMAIN") or os.getenv("WHITE_AGENT_URL")
     if env_url:
-        url = env_url
+        if not env_url.startswith("http"):
+            url = f"https://{env_url}"
+        else:
+            url = env_url
     else:
         url = f"http://{host}:{port}"
         
@@ -81,8 +86,22 @@ def start_white_agent(name="white_agent", host="127.0.0.1", port=9002):
         ),
     )
     
- 
     starlette_app = app.build()
+
+   
+    starlette_app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+
+    async def serve_card(request):
+        return JSONResponse(card_dict)
+    starlette_app.add_route("/", serve_card, methods=["GET"])
+
     async def force_status(request):
         return JSONResponse({"status": "ok", "agent": name})
     starlette_app.add_route("/status", force_status, methods=["GET"])
@@ -90,5 +109,4 @@ def start_white_agent(name="white_agent", host="127.0.0.1", port=9002):
     uvicorn.run(starlette_app, host=host, port=port)
 
 if __name__ == "__main__":
-   
     start_white_agent()

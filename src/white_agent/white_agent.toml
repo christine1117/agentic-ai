@@ -2,7 +2,7 @@ name = "white_agent"
 description = "CBT Therapist Agent"
 version = "1.0.0"
 
-url = "http://127.0.0.1:9002"
+url = "" 
 
 defaultInputModes = ["text"]
 defaultOutputModes = ["text"]
@@ -16,18 +16,9 @@ name = "CBT"
 description = "Provide CBT-style responses"
 tags = ["white"]
 
-[agent]
-host = "127.0.0.1"
-port = 9002
-url = "http://127.0.0.1:9002"
 
-[launcher]
-host = "127.0.0.1"
-port = 9002
-url = "http://127.0.0.1:9002"
+
+
 
 [platform]
-entrypoint = "white_agent:start_white_agent"
-
-[http_handler]
-entry_point = "/a2a"
+entrypoint = "src.white_agent.agent:start_white_agent"
