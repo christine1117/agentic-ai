@@ -1,17 +1,42 @@
+
+# ==========================================
 name = "Empa-green"
-description = """PersonaGym Green Agent for mental health evaluation."""
+description = "PersonaGym Green Agent for mental health evaluation."
 version = "1.0.0"
 
-url = ""
 
-defaultInputModes = ["text"]
-defaultOutputModes = ["text", "json"]
+url = "" 
+
+# ==========================================
+
+
+defaultInputModes = ["text/plain"]
+defaultOutputModes = ["text/plain"]
+preferredTransport = "JSONRPC"
+protocolVersion = "0.3.0"
+
+# ==========================================
+
 
 [capabilities]
 streaming = false
 
+
+# ==========================================
 [[skills]]
 id = "mental_health_eval"
 name = "Mental Health Evaluation"
-description = """Evaluates responses based on empathy, safety, and therapeutic standards."""
-tags = ["green", "mental-health"]
+description = "Evaluates responses based on empathy, safety, and therapeutic standards."
+tags = ["green agent", "mental-health", "evaluation"]
+
+
+examples = ["""
+Please evaluate the agent at:
+<white_agent_url>
+https://agentic-ai-production-9e46.up.railway.app
+</white_agent_url>
+"""]
+
+
+[platform]
+entrypoint = "src.green_agent.agent:start_green_agent"

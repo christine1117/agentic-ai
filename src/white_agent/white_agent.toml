@@ -1,24 +1,32 @@
+# ==========================================
 name = "white_agent"
 description = "CBT Therapist Agent"
 version = "1.0.0"
 
 url = "" 
 
-defaultInputModes = ["text"]
-defaultOutputModes = ["text"]
+# ==========================================
+defaultInputModes = ["text/plain"]
+defaultOutputModes = ["text/plain"]
+preferredTransport = "JSONRPC"
+protocolVersion = "0.3.0"
+
+# ==========================================
 
 [capabilities]
 streaming = false
 
+# ==========================================
+
 [[skills]]
 id = "cbt_therapy"
-name = "CBT"
-description = "Provide CBT-style responses"
-tags = ["white"]
+name = "CBT Therapy"
+description = "Provide CBT-style therapeutic responses."
+tags = ["white agent", "cbt", "mental-health"]
+# White Agent 
+examples = []
 
-
-
-
+# ==========================================
 
 [platform]
 entrypoint = "src.white_agent.agent:start_white_agent"
