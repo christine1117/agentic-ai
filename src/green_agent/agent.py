@@ -1,5 +1,5 @@
 """Green agent implementation - manages assessment and evaluation."""
-
+from starlette.middleware.cors import CORSMiddleware
 import uvicorn
 import tomllib
 import dotenv
@@ -23,7 +23,7 @@ from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCard
 from a2a.utils import new_agent_text_message
 from starlette.responses import JSONResponse
-
+from starlette.middleware.cors import CORSMiddleware
 # Utility
 from src.my_util import parse_tags, my_a2a
 
@@ -310,8 +310,14 @@ def start_green_agent(agent_name="empa_green", host="0.0.0.0", port=9001):
         http_handler=request_handler,
     )
     
-    starlette_app = app.build() # 找到這一行
-
+    starlette_app = app.build() 
+    starlette_app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],      
+        allow_credentials=True,
+        allow_methods=["*"],    
+        allow_headers=["*"],     
+    )
    
     async def serve_card(request):
         return JSONResponse(agent_card_dict)
