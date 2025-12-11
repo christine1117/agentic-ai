@@ -27,10 +27,10 @@ async def launch_evaluation():
     
  
     if not await my_a2a.wait_agent_ready(green_url):
-        print("❌ Green agent failed to start.")
+        print("Green agent failed to start.")
         p_green.terminate()
         return
-    print("✅ Green agent is ready.")
+    print("Green agent is ready.")
 
   
     print("\n🚀 Launching White Agent (Port 9002)...")
@@ -45,14 +45,14 @@ async def launch_evaluation():
     
   
     if not await my_a2a.wait_agent_ready(white_url):
-        print("❌ White agent failed to start.")
+        print("White agent failed to start.")
         p_green.terminate()
         p_white.terminate()
         return
-    print("✅ White agent is ready.")
+    print("White agent is ready.")
 
   
-    print("\n📨 Sending task to Green Agent...")
+    print("\n Sending task to Green Agent...")
     
 
     task_text = f"""

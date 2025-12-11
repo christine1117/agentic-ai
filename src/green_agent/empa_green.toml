@@ -2,7 +2,7 @@ name = "Empa-green"
 description = """PersonaGym Green Agent for mental health evaluation."""
 version = "1.0.0"
 
-url = "https://already-receives-thickness-lunch.trycloudflare.com"
+url = ""
 
 defaultInputModes = ["text"]
 defaultOutputModes = ["text", "json"]
