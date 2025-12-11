@@ -314,7 +314,6 @@ def start_green_agent(agent_name="empa_green", host="0.0.0.0", port=9001):
     starlette_app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],      
-        allow_credentials=True,
         allow_methods=["*"],    
         allow_headers=["*"],     
     )
