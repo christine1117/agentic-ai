@@ -51,7 +51,7 @@ class MentalHealthTherapist(Agent):
         except Exception as e:
             answer = f"Error generating response: {e}"
 
-        print(f"🗣️ [White Agent] 回答: {answer[:50]}...")
+        print(f"🗣️ [White Agent] answer: {answer[:50]}...")
 
        
         return {
